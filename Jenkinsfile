@@ -18,19 +18,19 @@ pipeline {
             }
             post {
                 success {
-                    fingerprint 'dist/react-todo-app'
+                    fingerprint 'build/'
                 }
             }
         }
         stage('Deploy to Apache2') {
             steps {
-                sh 'cp -rv dist/react-todo-app/* /var/www/html/'
+                sh 'cp -rv build* /var/www/html/'
             }
         }
         stage('Archive Artifacts') {
             steps {
                 sh '''
-                  zip -r archive.zip dist/react-todo-app/*
+                  zip -r archive.zip build/*
                 '''
                 archiveArtifacts artifacts: 'archive.zip', fingerprint: true, onlyIfSuccessful: true
             }
